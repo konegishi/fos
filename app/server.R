@@ -26,12 +26,19 @@ shinyServer(function(input, output) {
 
 # 問題の選択 -------------------------------------------------------------------
   # 選択された桁数に応じて読みこむ解答ファイルを変更
-  ansTable <- reactive({
+  ansTable <- eventReactive(input$generatePrint, {
     switch(input$digitNum,
            "1" = readRDS(file = "data/num1.rds"),
            "2" = readRDS(file = "data/num2.rds"),
            "3" = readRDS(file = "data/num2.rds"))
   })
+  
+  # ansTable <- reactive({
+  #   switch(input$digitNum,
+  #          "1" = readRDS(file = "data/num1.rds"),
+  #          "2" = readRDS(file = "data/num2.rds"),
+  #          "3" = readRDS(file = "data/num2.rds"))
+  # })
   
   # 問題の式を生成
   questionTexts <- reactive({
