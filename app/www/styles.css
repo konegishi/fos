@@ -1,0 +1,28 @@
+html {
+  font-size: 62.5%;
+}
+
+.main ul {
+  list-style: none;
+}
+
+.main li {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  height: 60px;
+}
+
+.name {
+  font-size: 1.6em;
+  border-bottom: 1px solid #333333;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  width: 400px;
+}
+
+.column {
+  float: left;
+  font-size: 1.4em;
+  width: 46%
+}
