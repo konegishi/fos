@@ -41,6 +41,8 @@ shinyUI(fluidPage(
              
              # 問題を生成するボタン
              actionButton("generatePrint", label = "問題を生成する"),
+             
+             textOutput("doneText")
              ),
 
     tabPanel("生成された問題プリント",

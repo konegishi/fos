@@ -41,24 +41,18 @@ shinyServer(function(input, output) {
     return(questions)
   })
   
-  # questionTexts <- reactive({
-  #   return(texts$questionTexts)
-  # })
   
-  # questionTexts <- reactive({
-  #   texts <- getQuestions(ansTable = ansTable(), 
-  #                         questionPattern = input$radioAddition)
-  #   
-  #   return(texts$questionTexts)
-  # })
   
-  # 解答付きの問題を生成
-  # answerTexts <- reactive({
-  #   texts <- getQuestions(ansTable = ansTable(), 
-  #                         questionPattern = input$radioAddition)
-  #   
-  #   return(texts$answerTexts)
-  # })
+
+# 問題生成の処理が完了したことを表示 -------------------------------------------------------
+  output$doneText <- renderText({
+    questions <- questions()
+    if(exists("questions")){
+      return("問題＆解答の生成完了！")
+    }
+    
+    return("")
+  })
   
     
 # 生成したプリントのUI -------------------------------------------------------------
