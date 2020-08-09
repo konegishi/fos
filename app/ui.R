@@ -41,8 +41,11 @@ shinyUI(fluidPage(
                           selected = 3)
              ),
     
-    tabPanel("生成されたプリント",
-             uiOutput("calPrint"))
+    tabPanel("生成された問題プリント",
+             uiOutput("questinoTab")),
+    
+    tabPanel("生成された解答プリント",
+             uiOutput("answerTab"))
   )
 ))
 

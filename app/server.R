@@ -25,22 +25,32 @@ shinyServer(function(input, output) {
   
 
 # 問題の選択 -------------------------------------------------------------------
+  # 選択された桁数に応じて読みこむファイルを変更
   ansTable <- reactive({
-    # print(input&radioCal)
     switch(input$digitNum,
            "1" = readRDS(file = "data/num1.rds"),
            "2" = readRDS(file = "data/num2.rds"),
            "3" = readRDS(file = "data/num2.rds"))
   })
   
-  hoge <- "hoge"
-  
-  var1 <- reactive({
-    return(ansTable()$Var1[1])
+  # 問題の式を生成
+  questionTexts <- reactive({
+    ansTableSampled <- ansTable() %>% 
+      sample_n(size = 20)  # ランダムに20行抽出
+    
+    questionTexts <- c()
+    for(i in 1:nrow(ansTableSampled)){
+      slicedTable <- ansTableSampled %>% 
+        slice(i)
+      questionTexts <- c(questionTexts, glue("({i}) {slicedTable$Var1} + {slicedTable$Var2} = "))
+    }
+    
+    return(questionTexts)
   })
-  
+
+    
 # 生成したプリントのUI -------------------------------------------------------------
-  output$calPrint <- renderUI({
+  output$questinoTab <- renderUI({
     withTags({
       div(class = "main",
           p(class = "name", 
@@ -49,81 +59,36 @@ shinyServer(function(input, output) {
           # 左列
           div(class = "column",
               ul(
-                li("(1) {var1()[1]} + {var2()[1]} = "),
-                li(glue("(2) {var1()[1]}")),
-                li("(3)"),
-                li("(4)"),
-                li("(5)"),
-                li("(6)"),
-                li("(7)"),
-                li("(8)"),
-                li("(9)"),
-                li("(10)")
+                li(questionTexts()[1]),
+                li(questionTexts()[2]),
+                li(questionTexts()[3]),
+                li(questionTexts()[4]),
+                li(questionTexts()[5]),
+                li(questionTexts()[6]),
+                li(questionTexts()[7]),
+                li(questionTexts()[8]),
+                li(questionTexts()[9]),
+                li(questionTexts()[10])
               )
           ),
           
           # 右列
           div(class = "column",
               ul(
-                li("(11)"),
-                li("(12)"),
-                li("(13)"),
-                li("(14)"),
-                li("(15)"),
-                li("(16)"),
-                li("(17)"),
-                li("(18)"),
-                li("(19)"),
-                li("(20)")
+                li(questionTexts()[11]),
+                li(questionTexts()[12]),
+                li(questionTexts()[13]),
+                li(questionTexts()[14]),
+                li(questionTexts()[15]),
+                li(questionTexts()[16]),
+                li(questionTexts()[17]),
+                li(questionTexts()[18]),
+                li(questionTexts()[19]),
+                li(questionTexts()[20])
               )
           )
       )
     })
   })
-  
-  
-  # output$calPrint <- renderUI({
-  #   withTags({
-  #     div(class = "main",
-  #         h3("なまえ："),
-  #         fluidRow(
-  #           column(6,
-  #                  withTags({
-  #                    div(class = "leftColumn",
-  #                        ul(
-  #                          li("(1)"),
-  #                          li("(2)"),
-  #                          li("(3)"),
-  #                          li("(4)"),
-  #                          li("(5)"),
-  #                          li("(6)"),
-  #                          li("(7)"),
-  #                          li("(8)"),
-  #                          li("(9)"),
-  #                          li("(10)")
-  #                        )
-  #                        )
-  #                  })
-  #           ),
-  #           column(6,
-  #                  withTags({
-  #                    div(class = "rightColumn",
-  #                        ul(
-  #                          li("(11)"),
-  #                          li("(12)"),
-  #                          li("(13)"),
-  #                          li("(14)"),
-  #                          li("(15)"),
-  #                          li("(16)"),
-  #                          li("(17)"),
-  #                          li("(18)"),
-  #                          li("(19)"),
-  #                          li("(20)")
-  #                          )
-  #                        )
-  #                  })
-  #           )))
-  #   })
-  # })
 })
 
