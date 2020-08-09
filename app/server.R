@@ -34,20 +34,31 @@ shinyServer(function(input, output) {
   })
 
   # 問題の式を生成
-  questionTexts <- reactive({
-    texts <- getQuestions(ansTable = ansTable(), 
-                          questionPattern = input$radioAddition)
+  questions <- reactive({
+    questions <- getQuestions(ansTable = ansTable(), 
+                              questionPattern = input$radioAddition)
     
-    return(texts$questionTexts)
+    return(questions)
   })
   
+  # questionTexts <- reactive({
+  #   return(texts$questionTexts)
+  # })
+  
+  # questionTexts <- reactive({
+  #   texts <- getQuestions(ansTable = ansTable(), 
+  #                         questionPattern = input$radioAddition)
+  #   
+  #   return(texts$questionTexts)
+  # })
+  
   # 解答付きの問題を生成
-  answerTexts <- reactive({
-    texts <- getQuestions(ansTable = ansTable(), 
-                          questionPattern = input$radioAddition)
-    
-    return(texts$answerTexts)
-  })
+  # answerTexts <- reactive({
+  #   texts <- getQuestions(ansTable = ansTable(), 
+  #                         questionPattern = input$radioAddition)
+  #   
+  #   return(texts$answerTexts)
+  # })
   
     
 # 生成したプリントのUI -------------------------------------------------------------
@@ -60,32 +71,32 @@ shinyServer(function(input, output) {
           # 左列
           div(class = "column",
               ul(
-                li(questionTexts()[1]),
-                li(questionTexts()[2]),
-                li(questionTexts()[3]),
-                li(questionTexts()[4]),
-                li(questionTexts()[5]),
-                li(questionTexts()[6]),
-                li(questionTexts()[7]),
-                li(questionTexts()[8]),
-                li(questionTexts()[9]),
-                li(questionTexts()[10])
+                li(questions()$questionTexts[1]),
+                li(questions()$questionTexts[2]),
+                li(questions()$questionTexts[3]),
+                li(questions()$questionTexts[4]),
+                li(questions()$questionTexts[5]),
+                li(questions()$questionTexts[6]),
+                li(questions()$questionTexts[7]),
+                li(questions()$questionTexts[8]),
+                li(questions()$questionTexts[9]),
+                li(questions()$questionTexts[10])
               )
           ),
           
           # 右列
           div(class = "column",
               ul(
-                li(questionTexts()[11]),
-                li(questionTexts()[12]),
-                li(questionTexts()[13]),
-                li(questionTexts()[14]),
-                li(questionTexts()[15]),
-                li(questionTexts()[16]),
-                li(questionTexts()[17]),
-                li(questionTexts()[18]),
-                li(questionTexts()[19]),
-                li(questionTexts()[20])
+                li(questions()$questionTexts[11]),
+                li(questions()$questionTexts[12]),
+                li(questions()$questionTexts[13]),
+                li(questions()$questionTexts[14]),
+                li(questions()$questionTexts[15]),
+                li(questions()$questionTexts[16]),
+                li(questions()$questionTexts[17]),
+                li(questions()$questionTexts[18]),
+                li(questions()$questionTexts[19]),
+                li(questions()$questionTexts[20])
               )
           )
       )
@@ -104,32 +115,32 @@ shinyServer(function(input, output) {
           # 左列
           div(class = "column",
               ul(
-                li(answerTexts()[1]),
-                li(answerTexts()[2]),
-                li(answerTexts()[3]),
-                li(answerTexts()[4]),
-                li(answerTexts()[5]),
-                li(answerTexts()[6]),
-                li(answerTexts()[7]),
-                li(answerTexts()[8]),
-                li(answerTexts()[9]),
-                li(answerTexts()[10])
+                li(questions()$answerTexts[1]),
+                li(questions()$answerTexts[2]),
+                li(questions()$answerTexts[3]),
+                li(questions()$answerTexts[4]),
+                li(questions()$answerTexts[5]),
+                li(questions()$answerTexts[6]),
+                li(questions()$answerTexts[7]),
+                li(questions()$answerTexts[8]),
+                li(questions()$answerTexts[9]),
+                li(questions()$answerTexts[10])
               )
           ),
           
           # 右列
           div(class = "column",
               ul(
-                li(answerTexts()[11]),
-                li(answerTexts()[12]),
-                li(answerTexts()[13]),
-                li(answerTexts()[14]),
-                li(answerTexts()[15]),
-                li(answerTexts()[16]),
-                li(answerTexts()[17]),
-                li(answerTexts()[18]),
-                li(answerTexts()[19]),
-                li(answerTexts()[20])
+                li(questions()$answerTexts[11]),
+                li(questions()$answerTexts[12]),
+                li(questions()$answerTexts[13]),
+                li(questions()$answerTexts[14]),
+                li(questions()$answerTexts[15]),
+                li(questions()$answerTexts[16]),
+                li(questions()$answerTexts[17]),
+                li(questions()$answerTexts[18]),
+                li(questions()$answerTexts[19]),
+                li(questions()$answerTexts[20])
               )
           )
       )
