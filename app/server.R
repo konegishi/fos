@@ -35,7 +35,8 @@ shinyServer(function(input, output) {
   
   # 問題の式を生成
   questionTexts <- reactive({
-    texts <- getQuestions(ansTable())
+    texts <- getQuestions(ansTable = ansTable(), 
+                          questionPattern = input$radioAddition)
     
     return(texts$questionTexts)
   })

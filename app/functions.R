@@ -1,11 +1,21 @@
 # このappで使用する関数の定義
 
 # 問題分を作成する
-# @param ansTable 解答表
+# @params ansTable 解答表
+# @params questionPattern 問題形式のフラグ（1: 繰り上がりあり, 2: 繰り上がりなし, 3: ランダム）
 # @return 問題文のベクトル
-getQuestions <- function(ansTable){
-  ansTableSampled <- ansTable %>% 
-    sample_n(size = 20)  # ランダムに20行抽出
+getQuestions <- function(ansTable, questionPattern){
+  # 繰り上がり有無の設定に合わせて問題を抽出
+  ansTableSampled <- switch(questionPattern, 
+         "1" = ansTable %>% 
+           filter(isCarried == T) %>%  # 繰り上がりありだけ抽出
+           sample_n(size = 20),  # ランダムに20行抽出
+         "2" = ansTable %>% 
+           filter(isCarried == F) %>%  # 繰り上がりなしだけ抽出
+           sample_n(size = 20), 
+         "3" = ansTable %>% 
+           sample_n(size = 20)
+         )
   
   questionTexts <- c()
   answerTexts <- c()
