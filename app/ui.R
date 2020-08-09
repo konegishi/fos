@@ -11,7 +11,7 @@ library(shinycustomloader)
 shinyUI(fluidPage(
   tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "styles.css")),
   navbarPage(
-    title = "算数プリントを自動生成",
+    title = "計算プリントを自動生成",
     theme = shinytheme("flatly"),
     
     tabPanel("問題を生成",
@@ -40,9 +40,7 @@ shinyUI(fluidPage(
                           selected = 3),
              
              # 問題を生成するボタン
-             actionButton("generatePrint", label = "問題を生成する"),
-             
-             textOutput("doneText")
+             actionButton("generatePrint", label = "問題を生成する")
              ),
 
     tabPanel("生成された問題プリント",

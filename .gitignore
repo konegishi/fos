@@ -41,3 +41,6 @@ vignettes/*.pdf
 # Input files
 data/
 app/data/
+
+# shinyapps
+app/rsconnect/
