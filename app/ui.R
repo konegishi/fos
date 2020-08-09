@@ -16,8 +16,7 @@ shinyUI(fluidPage(
     
     tabPanel("問題を生成",
              h2("計算プリントの設定"),
-             checkboxInput('header', 'Header', TRUE),
-             
+
              # 四則演算の選択
              selectInput("radioCal", label = h3("四則演算"),
                           choices = list("足し算" = 1, 
@@ -48,68 +47,3 @@ shinyUI(fluidPage(
              uiOutput("answerTab"))
   )
 ))
-
-# shinyUI(fluidPage(theme = shinytheme("cerulean"),
-#                   titlePanel("算数プリントを自動生成"),
-#                   
-#                   sidebarLayout(
-#                     sidebarPanel(
-#                       checkboxInput('header', 'Header', TRUE),
-#                       # radioButtons('sep', 'Separator',
-#                       #              c(Tab='\t',
-#                       #                Comma=',',
-#                       #                Semicolon=';'),
-#                       #              '\t'),
-#                       # radioButtons('quote', 'Quote',
-#                       #              c(None='',
-#                       #                'Double Quote'='"',
-#                       #                'Single Quote'="'"),
-#                       #              '"'),
-#                       # checkboxInput("Tmatrix", label="Tarnspose matrix", value=F),
-#                       # actionButton("calPCC", label="Caluculate PCC values"),
-#                       # 
-#                       # 
-#                       # 
-#                       # tags$hr(),
-#                       # sliderInput("th", label="Choose threshold",
-#                       #             max=1, min=0, value=c(0.9, 1)),
-#                       # textInput("th_network", label="PCC values used for cut-off", value=1),
-#                       # actionButton("ViewNetwork", "View Network"),
-#                       # 
-#                       # 
-#                       # 
-#                       # tags$hr(),
-#                       # textInput("downloadName", label="Download file name", value=Sys.Date()),
-#                       # downloadButton("download", label="Download")
-#                     ),
-#                     
-#                     mainPanel(
-#                       h1("計算プリント"),
-#                       uiOutput("test")
-#                       # h1(),
-#                       # textOutput("filename"),
-#                       # hr(),
-#                       # textOutput("InputTable"),
-#                       
-#                       # fluidRow(
-#                       #   column(6,
-#                       #          plotOutput("Edge")),
-#                       #   column(6,
-#                       #          plotOutput("Node"))
-#                       # ),
-#                       
-#                       # tags$hr(),
-#                       # fluidRow(
-#                       #   column(8,
-#                       #          h2("Member Network"),
-#                       #          plotOutput("Network")),
-#                       #   column(4,
-#                       #          br(),
-#                       #          br(),
-#                       #          br(),
-#                       #          br(),
-#                       #          tableOutput("Member"))
-#                       # )
-#                     )
-#                   )
-# ))
