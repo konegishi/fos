@@ -32,14 +32,7 @@ shinyServer(function(input, output) {
            "2" = readRDS(file = "data/num2.rds"),
            "3" = readRDS(file = "data/num2.rds"))
   })
-  
-  # ansTable <- reactive({
-  #   switch(input$digitNum,
-  #          "1" = readRDS(file = "data/num1.rds"),
-  #          "2" = readRDS(file = "data/num2.rds"),
-  #          "3" = readRDS(file = "data/num2.rds"))
-  # })
-  
+
   # 問題の式を生成
   questionTexts <- reactive({
     texts <- getQuestions(ansTable = ansTable(), 
@@ -47,7 +40,15 @@ shinyServer(function(input, output) {
     
     return(texts$questionTexts)
   })
-
+  
+  # 解答付きの問題を生成
+  answerTexts <- reactive({
+    texts <- getQuestions(ansTable = ansTable(), 
+                          questionPattern = input$radioAddition)
+    
+    return(texts$answerTexts)
+  })
+  
     
 # 生成したプリントのUI -------------------------------------------------------------
   output$questinoTab <- renderUI({
@@ -85,6 +86,50 @@ shinyServer(function(input, output) {
                 li(questionTexts()[18]),
                 li(questionTexts()[19]),
                 li(questionTexts()[20])
+              )
+          )
+      )
+    })
+  })
+  
+  
+
+# 解答付きプリントのUI -------------------------------------------------------------
+  output$answerTab <- renderUI({
+    withTags({
+      div(class = "main",
+          p(class = "name", 
+            "なまえ："),
+          
+          # 左列
+          div(class = "column",
+              ul(
+                li(answerTexts()[1]),
+                li(answerTexts()[2]),
+                li(answerTexts()[3]),
+                li(answerTexts()[4]),
+                li(answerTexts()[5]),
+                li(answerTexts()[6]),
+                li(answerTexts()[7]),
+                li(answerTexts()[8]),
+                li(answerTexts()[9]),
+                li(answerTexts()[10])
+              )
+          ),
+          
+          # 右列
+          div(class = "column",
+              ul(
+                li(answerTexts()[11]),
+                li(answerTexts()[12]),
+                li(answerTexts()[13]),
+                li(answerTexts()[14]),
+                li(answerTexts()[15]),
+                li(answerTexts()[16]),
+                li(answerTexts()[17]),
+                li(answerTexts()[18]),
+                li(answerTexts()[19]),
+                li(answerTexts()[20])
               )
           )
       )

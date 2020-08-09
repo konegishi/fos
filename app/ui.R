@@ -39,7 +39,7 @@ shinyUI(fluidPage(
                                          "ランダム" = 3),
                           selected = 3),
              
-             # 問題を生成ボタン
+             # 問題を生成するボタン
              actionButton("generatePrint", label = "問題を生成する"),
              ),
 
@@ -50,7 +50,11 @@ shinyUI(fluidPage(
                loader = "dnaspin"
              )),
 
-    tabPanel("生成された解答プリント",
-             uiOutput("answerTab"))
+    tabPanel("生成された解答付きプリント",
+             withLoader(
+               uiOutput("answerTab"),
+               type = "html",
+               loader = "dnaspin"
+             ))
   )
 ))
