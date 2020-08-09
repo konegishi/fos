@@ -8,9 +8,9 @@ library(shiny)
 library(tidyverse)
 library(glue)
 
+# 関数定義したファイルを読み込む
+source("functions.R")
 
-
-# user.base <- readRDS(file = "data/userBase.rds")
 
 # サーバー側の処理 ----------------------------------------------------------------
 shinyServer(function(input, output) {
@@ -25,7 +25,7 @@ shinyServer(function(input, output) {
   
 
 # 問題の選択 -------------------------------------------------------------------
-  # 選択された桁数に応じて読みこむファイルを変更
+  # 選択された桁数に応じて読みこむ解答ファイルを変更
   ansTable <- reactive({
     switch(input$digitNum,
            "1" = readRDS(file = "data/num1.rds"),
@@ -35,17 +35,9 @@ shinyServer(function(input, output) {
   
   # 問題の式を生成
   questionTexts <- reactive({
-    ansTableSampled <- ansTable() %>% 
-      sample_n(size = 20)  # ランダムに20行抽出
+    texts <- getQuestions(ansTable())
     
-    questionTexts <- c()
-    for(i in 1:nrow(ansTableSampled)){
-      slicedTable <- ansTableSampled %>% 
-        slice(i)
-      questionTexts <- c(questionTexts, glue("({i}) {slicedTable$Var1} + {slicedTable$Var2} = "))
-    }
-    
-    return(questionTexts)
+    return(texts$questionTexts)
   })
 
     
