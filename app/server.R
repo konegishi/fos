@@ -16,7 +16,7 @@ source("functions.R")
 shinyServer(function(input, output) {
 
 
-# 設定ページのUI ----------------------------------------------------------------
+# 計算の詳細設定ページのUI ----------------------------------------------------------------
   # output$calSettings <- renderUI({
   #   h2("計算プリントの設定")
   # })
@@ -27,16 +27,29 @@ shinyServer(function(input, output) {
 # 問題の選択 -------------------------------------------------------------------
   # 選択された桁数に応じて読みこむ解答ファイルを変更
   ansTable <- eventReactive(input$generatePrint, {
-    switch(input$digitNum,
-           "1" = readRDS(file = "data/num1.rds"),
-           "2" = readRDS(file = "data/num2.rds"),
-           "3" = readRDS(file = "data/num2.rds"))
+    oprt <- input$arithOperations
+    if(oprt == "1"){
+      # 足し算の場合
+      ansTable <- switch(input$digitNum,
+                         "1" = readRDS(file = "data/addAns1.rds"),
+                         "2" = readRDS(file = "data/addAns1.rds"),
+                         "3" = readRDS(file = "data/addAns1.rds"))
+    } else if(oprt == "2"){
+      # 引き算の場合
+      ansTable <- switch(input$digitNum,
+                         "1" = readRDS(file = "data/subAns1.rds"),
+                         "2" = readRDS(file = "data/subAns1.rds"),
+                         "3" = readRDS(file = "data/subAns1.rds"))
+    }
+    
+    return(ansTable)
   })
 
   # 問題の式を生成
   questions <- reactive({
     questions <- getQuestions(ansTable = ansTable(), 
-                              questionPattern = input$radioAddition)
+                              questionPattern = input$radioAddition, 
+                              arithOperations = input$arithOperations)
     
     return(questions)
   })

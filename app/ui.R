@@ -18,7 +18,7 @@ shinyUI(fluidPage(
              h2("計算プリントの設定"),
 
              # 四則演算の選択
-             selectInput("radioCal", label = h3("四則演算"),
+             selectInput("arithOperations", label = h3("四則演算"),
                           choices = list("足し算" = 1, 
                                          "引き算（未対応）" = 2,
                                          "掛け算（未対応）" = 3,
@@ -32,9 +32,12 @@ shinyUI(fluidPage(
                                         "3桁まで" = 3),
                          selected = 1),
              
+             # 計算の詳細設定
+             # uiOutput("advancedSettings"),
+             
              # 足し算の設定
              radioButtons("radioAddition", label = h3("足し算の詳細設定"),
-                          choices = list("繰り上がりあり" = 1, 
+                          choices = list("繰り上がりあり" = 1,
                                          "繰り上がりなし" = 2,
                                          "ランダム" = 3),
                           selected = 3),
