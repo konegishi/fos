@@ -1,9 +1,6 @@
 #server
 
 # packageのロード
-# pacman::p_load(shiny,
-#                tidyverse,
-#                shinycustomloader)
 library(shiny)
 library(tidyverse)
 library(glue)
@@ -17,9 +14,36 @@ shinyServer(function(input, output) {
 
 
 # 計算の詳細設定ページのUI ----------------------------------------------------------------
-  # output$calSettings <- renderUI({
-  #   h2("計算プリントの設定")
-  # })
+  output$advancedSettings <- renderUI({
+    radioButtonSetting <- list()
+    if(input$arithOperations == "1"){
+      # 足し算の設定
+      radioButtonSetting$id <- "radioAddition"
+      radioButtonSetting$label <- "足し算の詳細設定"
+      radioButtonSetting$choices <- list("繰り上がりあり" = 1,
+                                         "繰り上がりなし" = 2,
+                                         "ランダム" = 3)
+    } else if (input$arithOperations == "2"){
+      # 引き算の設定
+      radioButtonSetting$id <- "radioSubtraction"
+      radioButtonSetting$label <- "引き算の詳細設定"
+      if(input$digitNum == "1"){
+        radioButtonSetting$choices <- list("繰り下がりなし" = 2,
+                                           "ランダム" = 3)
+      } else {
+        radioButtonSetting$choices <- list("繰り下がりあり" = 1,
+                                           "繰り下がりなし" = 2,
+                                           "ランダム" = 3)
+      }
+    }
+    
+    return(
+      radioButtons(radioButtonSetting$id, 
+                   label = h3(radioButtonSetting$label),
+                   choices = radioButtonSetting$choices,
+                   selected = 3)
+    )
+  })
 
 
   
@@ -32,23 +56,30 @@ shinyServer(function(input, output) {
       # 足し算の場合
       ansTable <- switch(input$digitNum,
                          "1" = readRDS(file = "data/addAns1.rds"),
-                         "2" = readRDS(file = "data/addAns1.rds"),
-                         "3" = readRDS(file = "data/addAns1.rds"))
+                         "2" = readRDS(file = "data/addAns2.rds"),
+                         "3" = readRDS(file = "data/addAns3.rds"))
     } else if(oprt == "2"){
       # 引き算の場合
       ansTable <- switch(input$digitNum,
                          "1" = readRDS(file = "data/subAns1.rds"),
-                         "2" = readRDS(file = "data/subAns1.rds"),
-                         "3" = readRDS(file = "data/subAns1.rds"))
+                         "2" = readRDS(file = "data/subAns2.rds"),
+                         "3" = readRDS(file = "data/subAns3.rds"))
     }
     
     return(ansTable)
   })
 
+  # 詳細設定
+  questionPattern <- reactive({
+    switch(input$arithOperations,
+           "1" = input$radioAddition,
+           "2" = input$radioSubtraction)
+  })
+  
   # 問題の式を生成
   questions <- reactive({
     questions <- getQuestions(ansTable = ansTable(), 
-                              questionPattern = input$radioAddition, 
+                              questionPattern = questionPattern(), 
                               arithOperations = input$arithOperations)
     
     return(questions)

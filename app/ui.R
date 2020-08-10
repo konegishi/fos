@@ -1,7 +1,6 @@
 #ui
 
 # packageのロード
-# pacman::p_load(shiny, shinythemes, shinycustomloader)
 library(shiny)
 library(shinydashboard)
 library(shinythemes)
@@ -33,15 +32,8 @@ shinyUI(fluidPage(
                          selected = 1),
              
              # 計算の詳細設定
-             # uiOutput("advancedSettings"),
-             
-             # 足し算の設定
-             radioButtons("radioAddition", label = h3("足し算の詳細設定"),
-                          choices = list("繰り上がりあり" = 1,
-                                         "繰り上がりなし" = 2,
-                                         "ランダム" = 3),
-                          selected = 3),
-             
+             uiOutput("advancedSettings"),
+
              # 問題を生成するボタン
              actionButton("generatePrint", label = "問題を生成する")
              ),
