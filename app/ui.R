@@ -1,7 +1,6 @@
 #ui
 
 # packageのロード
-# pacman::p_load(shiny, shinythemes, shinycustomloader)
 library(shiny)
 library(shinydashboard)
 library(shinythemes)
@@ -18,9 +17,9 @@ shinyUI(fluidPage(
              h2("計算プリントの設定"),
 
              # 四則演算の選択
-             selectInput("radioCal", label = h3("四則演算"),
+             selectInput("arithOperations", label = h3("四則演算"),
                           choices = list("足し算" = 1, 
-                                         "引き算（未対応）" = 2,
+                                         "引き算" = 2,
                                          "掛け算（未対応）" = 3,
                                          "割り算（未対応）" = 4),
                           selected = 1),
@@ -32,13 +31,9 @@ shinyUI(fluidPage(
                                         "3桁まで" = 3),
                          selected = 1),
              
-             # 足し算の設定
-             radioButtons("radioAddition", label = h3("足し算の詳細設定"),
-                          choices = list("繰り上がりあり" = 1, 
-                                         "繰り上がりなし" = 2,
-                                         "ランダム" = 3),
-                          selected = 3),
-             
+             # 計算の詳細設定
+             uiOutput("advancedSettings"),
+
              # 問題を生成するボタン
              actionButton("generatePrint", label = "問題を生成する")
              ),
