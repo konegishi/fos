@@ -20,9 +20,9 @@ shinyUI(fluidPage(
              # 四則演算の選択
              selectInput("radioCal", label = h3("四則演算"),
                           choices = list("足し算" = 1, 
-                                         "引き算" = 2,
-                                         "掛け算" = 3,
-                                         "割り算" = 4),
+                                         "引き算（未対応）" = 2,
+                                         "掛け算（未対応）" = 3,
+                                         "割り算（未対応）" = 4),
                           selected = 1),
 
              # 桁数の選択

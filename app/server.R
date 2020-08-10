@@ -45,6 +45,7 @@ shinyServer(function(input, output) {
   
 
 # 問題生成の処理が完了したことをモーダル表示 -------------------------------------------------------
+  # 参考；https://shiny.rstudio.com/articles/tag-glossary.html
   # 厳密には「問題を生成する」ボタンを押した時点で表示
   observeEvent(input$generatePrint, {
     showModal(modalDialog(
