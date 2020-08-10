@@ -59,7 +59,7 @@ subAns2 <-
          ans = Var1 - Var2,  # 引き算の解答
          ansOne = as.numeric(str_sub(paddedVar1, start = -1, end = -1)) - as.numeric(str_sub(paddedVar2, start = -1, end = -1)),  # 一の位の答え
          ansTens = as.numeric(str_sub(paddedVar1, start = -2, end = -2)) - as.numeric(str_sub(paddedVar2, start = -2, end = -2)),  # 十の位の答え
-         isBorrowed = ansOne <= -1 | ansTens <= -1) %>%   # 繰り上がりしているかどうかのフラグ（TRUE: 繰り上がりあり）
+         isBorrowed = ansOne <= -1 | ansTens <= -1) %>%   # 繰り下がりしているかどうかのフラグ（TRUE: 繰り下がりあり）
   filter(ans >= 0)  # 答えがマイナスになる組み合わせは削除
 
 
@@ -69,11 +69,11 @@ subAns3 <-
   as_tibble() %>% 
   mutate(paddedVar1 = str_pad(Var1, 3, pad = "0"),   # 0埋め(padding)した値 
          paddedVar2 = str_pad(Var2, 3, pad = "0"), 
-         ans = Var1 - Var2,  # 足し算の解答
-         ansOne = as.numeric(str_sub(paddedVar1, start = -1, end = -1)) - as.numeric(str_sub(paddedVar2, start = -1, end = -1)),  # 一の位の足し算解答
-         ansTens = as.numeric(str_sub(paddedVar1, start = -2, end = -2)) - as.numeric(str_sub(paddedVar2, start = -2, end = -2)),  # 十の位の足し算解答
-         ansHundreds = as.numeric(str_sub(paddedVar1, start = -3, end = -3)) - as.numeric(str_sub(paddedVar2, start = -3, end = -3)),  # 百の位の足し算解答
-         isBorrowed = ansOne <= -1 | ansTens <= -1 | ansHundreds <= -1) %>%  # 繰り上がりしているかどうかのフラグ（TRUE: 繰り上がりあり）
+         ans = Var1 - Var2,  # 引き算の解答
+         ansOne = as.numeric(str_sub(paddedVar1, start = -1, end = -1)) - as.numeric(str_sub(paddedVar2, start = -1, end = -1)),  # 一の位の答え
+         ansTens = as.numeric(str_sub(paddedVar1, start = -2, end = -2)) - as.numeric(str_sub(paddedVar2, start = -2, end = -2)),  # 十の位の答え
+         ansHundreds = as.numeric(str_sub(paddedVar1, start = -3, end = -3)) - as.numeric(str_sub(paddedVar2, start = -3, end = -3)),  # 百の位の答え
+         isBorrowed = ansOne <= -1 | ansTens <= -1 | ansHundreds <= -1) %>%  # 繰り下がりしているかどうかのフラグ（TRUE: 繰り下がりあり）
   filter(ans >= 0)  # 答えがマイナスになる組み合わせは削除
 
 
