@@ -35,6 +35,11 @@ shinyServer(function(input, output) {
                                            "繰り下がりなし" = 2,
                                            "ランダム" = 3)
       }
+    } else {
+      # 掛け算と割り算にはまだ未対応なのでその旨を表示する
+      return(
+        h3("掛け算と割り算には未対応です")
+      )
     }
     
     return(
