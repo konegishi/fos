@@ -33,14 +33,31 @@ getQuestions <- function(ansTable, questionPattern, arithOperations){
   } else if (arithOperations == "4"){
     # 割り算
     # 余り有無の設定に合わせて問題を抽出
+    ansTableWithout1 <- ansTable %>% 
+      filter(ans != 1)
+    ansTableAdjusted <- ansTable %>% 
+      filter(ans == 1) %>% 
+      sample_n(size = trunc(nrow(ansTableWithout1) * 0.1)) %>% 
+      bind_rows(ansTableWithout1)
     ansTableSampled <- switch(questionPattern, 
-                              "1" = ansTable %>% 
+                              # 余りあり（1桁）
+                              "1" = ansTable %>%
                                 filter(haveRmdr == T) %>%  # 余りありだけ抽出
                                 sample_n(size = 20),  # ランダムに20行抽出
-                              "2" = ansTable %>% 
+                              # 余りなし（1桁）
+                              "2" = ansTable %>%  
                                 filter(haveRmdr == F) %>%  # 余りなしだけ抽出
                                 sample_n(size = 20), 
-                              "3" = ansTable %>% 
+                              # ランダム
+                              "3" = ansTableAdjusted %>%  
+                                sample_n(size = 20),
+                              # 余りあり（1桁以外）
+                              "4" = ansTableAdjusted %>%  
+                                filter(haveRmdr == T) %>%  # 余りありだけ抽出
+                                sample_n(size = 20),  # ランダムに20行抽出
+                              # 余りなし（1桁以外）
+                              "5" = ansTableAdjusted %>%  
+                                filter(haveRmdr == F) %>%  # 余りなしだけ抽出
                                 sample_n(size = 20))
   }
 

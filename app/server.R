@@ -39,9 +39,15 @@ shinyServer(function(input, output) {
       # 割り算の設定
       radioButtonSetting$id <- "radioDivision"
       radioButtonSetting$label <- "割り算の詳細設定"
-      radioButtonSetting$choices <- list("余りあり" = 1,
-                                         "余りなし" = 2,
-                                         "ランダム" = 3)
+      if(input$digitNum == "1"){
+        radioButtonSetting$choices <- list("余りあり" = 1,
+                                           "余りなし" = 2,
+                                           "ランダム" = 3)
+      } else {
+        radioButtonSetting$choices <- list("余りあり" = 4,
+                                           "余りなし" = 5,
+                                           "ランダム" = 3)
+      }
     } else {
       # 掛け算にはまだ未対応なのでその旨を表示する
       return(
