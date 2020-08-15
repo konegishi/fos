@@ -14,26 +14,45 @@ shinyUI(fluidPage(
     theme = shinytheme("flatly"),
     
     tabPanel("問題を生成",
-             h2("計算プリントの設定"),
+             h2("計算プリントの基本設定"),
 
              # 四則演算の選択
-             selectInput("arithOperations", label = h3("四則演算"),
+             selectInput("arithOperations", label = h4("作りたい問題を選択してください"),
                           choices = list("足し算" = 1, 
                                          "引き算" = 2,
                                          "掛け算（未対応）" = 3,
                                          "割り算" = 4),
                           selected = 1),
 
-             # 桁数の選択
-             selectInput("digitNum", label = h3("桁数の設定"),
-                         choices = list("1桁のみ" = 1, 
-                                        "2桁まで" = 2,
-                                        "3桁まで" = 3),
-                         selected = 1),
+             hr(),
              
-             # 計算の詳細設定
-             uiOutput("advancedSettings"),
+             h2("詳細設定"),
+             fluidRow(column(6,
+                             # 桁数の選択
+                             radioButtons("digitNum", 
+                                          label = h4("桁数の設定"),
+                                          choices = list("1桁のみ" = 1,
+                                                         "2桁まで" = 2,
+                                                         "3桁まで" = 3),
+                                          selected = 1),
+                             ),
+                      column(6,
+                             # 計算の詳細設定
+                             uiOutput("advancedSettings"),
+                             )),
+             # # 桁数の選択
+             # selectInput("digitNum", label = h3("桁数の設定"),
+             #             choices = list("1桁のみ" = 1, 
+             #                            "2桁まで" = 2,
+             #                            "3桁まで" = 3),
+             #             selected = 1),
+             # 
+             # # 計算の詳細設定
+             # uiOutput("advancedSettings"),
 
+             
+             hr(),
+             
              # 問題を生成するボタン
              actionButton("generatePrint", label = "問題を生成する")
              ),

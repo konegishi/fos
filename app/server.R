@@ -19,14 +19,14 @@ shinyServer(function(input, output) {
     if(input$arithOperations == "1"){
       # 足し算の設定
       radioButtonSetting$id <- "radioAddition"
-      radioButtonSetting$label <- "足し算の詳細設定"
+      radioButtonSetting$label <- "足し算の問題形式"
       radioButtonSetting$choices <- list("繰り上がりあり" = 1,
                                          "繰り上がりなし" = 2,
                                          "ランダム" = 3)
     } else if (input$arithOperations == "2"){
       # 引き算の設定
       radioButtonSetting$id <- "radioSubtraction"
-      radioButtonSetting$label <- "引き算の詳細設定"
+      radioButtonSetting$label <- "引き算の問題形式"
       if(input$digitNum == "1"){
         radioButtonSetting$choices <- list("繰り下がりなし" = 2,
                                            "ランダム" = 3)
@@ -38,7 +38,7 @@ shinyServer(function(input, output) {
     } else if (input$arithOperations == "4") {
       # 割り算の設定
       radioButtonSetting$id <- "radioDivision"
-      radioButtonSetting$label <- "割り算の詳細設定"
+      radioButtonSetting$label <- "割り算の問題形式"
       if(input$digitNum == "1"){
         radioButtonSetting$choices <- list("余りあり" = 1,
                                            "余りなし" = 2,
@@ -57,7 +57,7 @@ shinyServer(function(input, output) {
     
     return(
       radioButtons(radioButtonSetting$id, 
-                   label = h3(radioButtonSetting$label),
+                   label = h4(radioButtonSetting$label),
                    choices = radioButtonSetting$choices,
                    selected = 3)
     )
