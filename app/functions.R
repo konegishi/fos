@@ -30,6 +30,18 @@ getQuestions <- function(ansTable, questionPattern, arithOperations){
                                 sample_n(size = 20), 
                               "3" = ansTable %>% 
                                 sample_n(size = 20))
+  } else if (arithOperations == "4"){
+    # 割り算
+    # 余り有無の設定に合わせて問題を抽出
+    ansTableSampled <- switch(questionPattern, 
+                              "1" = ansTable %>% 
+                                filter(haveRmdr == T) %>%  # 余りありだけ抽出
+                                sample_n(size = 20),  # ランダムに20行抽出
+                              "2" = ansTable %>% 
+                                filter(haveRmdr == F) %>%  # 余りなしだけ抽出
+                                sample_n(size = 20), 
+                              "3" = ansTable %>% 
+                                sample_n(size = 20))
   }
 
   # arithOperationsで演算子の記号を決定
@@ -45,8 +57,18 @@ getQuestions <- function(ansTable, questionPattern, arithOperations){
   for(i in 1:nrow(ansTableSampled)){
     slicedTable <- ansTableSampled %>% 
       slice(i)
+    
+    # 問題文
     questionTexts <- c(questionTexts, glue("({i}) {slicedTable$Var1} {oprt} {slicedTable$Var2} = "))
-    answerTexts <- c(answerTexts, glue("({i}) {slicedTable$Var1} {oprt} {slicedTable$Var2} = {slicedTable$ans}"))
+    
+    # 答え付き
+    if (arithOperations == "4" && slicedTable$haveRmdr) {
+      # 割り算の時には余りが
+      ansTemplate <- "({i}) {slicedTable$Var1} {oprt} {slicedTable$Var2} = {slicedTable$ans}  あまり {slicedTable$rmdr} "
+    } else {
+      ansTemplate <- "({i}) {slicedTable$Var1} {oprt} {slicedTable$Var2} = {slicedTable$ans}"
+    }
+    answerTexts <- c(answerTexts, glue(ansTemplate))
   }
   
   return(list(questionTexts = questionTexts, answerTexts = answerTexts))
