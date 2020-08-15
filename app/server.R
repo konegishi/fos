@@ -35,10 +35,23 @@ shinyServer(function(input, output) {
                                            "繰り下がりなし" = 2,
                                            "ランダム" = 3)
       }
+    } else if (input$arithOperations == "4") {
+      # 割り算の設定
+      radioButtonSetting$id <- "radioDivision"
+      radioButtonSetting$label <- "割り算の詳細設定"
+      if(input$digitNum == "1"){
+        radioButtonSetting$choices <- list("余りあり" = 1,
+                                           "余りなし" = 2,
+                                           "ランダム" = 3)
+      } else {
+        radioButtonSetting$choices <- list("余りあり" = 4,
+                                           "余りなし" = 5,
+                                           "ランダム" = 3)
+      }
     } else {
-      # 掛け算と割り算にはまだ未対応なのでその旨を表示する
+      # 掛け算にはまだ未対応なのでその旨を表示する
       return(
-        h3("掛け算と割り算には未対応です")
+        h3("掛け算には未対応です")
       )
     }
     
@@ -63,12 +76,18 @@ shinyServer(function(input, output) {
                          "1" = readRDS(file = "data/addAns1.rds"),
                          "2" = readRDS(file = "data/addAns2.rds"),
                          "3" = readRDS(file = "data/addAns3.rds"))
-    } else if(oprt == "2"){
+    } else if (oprt == "2"){
       # 引き算の場合
       ansTable <- switch(input$digitNum,
                          "1" = readRDS(file = "data/subAns1.rds"),
                          "2" = readRDS(file = "data/subAns2.rds"),
                          "3" = readRDS(file = "data/subAns3.rds"))
+    } else if (oprt == "4"){
+      # 割り算の場合
+      ansTable <- switch(input$digitNum,
+                         "1" = readRDS(file = "data/divAns1.rds"),
+                         "2" = readRDS(file = "data/divAns2.rds"),
+                         "3" = readRDS(file = "data/divAns3.rds"))
     }
     
     return(ansTable)
@@ -78,7 +97,8 @@ shinyServer(function(input, output) {
   questionPattern <- reactive({
     switch(input$arithOperations,
            "1" = input$radioAddition,
-           "2" = input$radioSubtraction)
+           "2" = input$radioSubtraction,
+           "4" = input$radioDivision)
   })
   
   # 問題の式を生成
