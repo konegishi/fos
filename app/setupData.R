@@ -4,7 +4,7 @@ pacman::p_load(tidyverse)
 
 
 # 繰り上がりのある足し算の場合には、isCarriedをTに繰り上がりのある足し算の場合には、isCarriedをTに --------------
-# 1桁＋1桁の足し算
+# 1桁＋1桁
 addAns1 <- 
   expand.grid(1:9, 1:9) %>% 
   as_tibble() %>% 
@@ -41,7 +41,7 @@ addAns3 <-
 
 
 # 引き算 ---------------------------------------------------------------------
-# 1桁ー1桁の足し算
+# 1桁ー1桁
 subAns1 <- 
   expand.grid(1:9, 1:9) %>% 
   as_tibble() %>% 
@@ -77,6 +77,40 @@ subAns3 <-
   filter(ans >= 0)  # 答えがマイナスになる組み合わせは削除
 
 
+# 割り算 ---------------------------------------------------------------------
+# 1桁ー1桁の足し算
+divAns1 <- 
+  expand.grid(1:9, 1:9) %>% 
+  as_tibble() %>% 
+  mutate(ans = Var1 %/% Var2,  # 答え
+         rmdr = Var1 %% Var2,  # 余り
+         haveRmdr = rmdr != 0) %>%  # 余りがあるかどうかのフラグ（TRUE: 余りあり）
+  filter(ans != 0)  # 割ることができない組み合わせは削除
+
+
+# 2桁まで
+divAns2 <- 
+  expand.grid(1:99, 1:99) %>% 
+  as_tibble() %>% 
+  mutate(paddedVar1 = str_pad(Var1, 2, pad = "0"),  # 0埋め(padding)した値 
+         paddedVar2 = str_pad(Var2, 2, pad = "0"), 
+         ans = Var1 %/% Var2,  # 答え
+         rmdr = Var1 %% Var2,  # 余り
+         haveRmdr = rmdr != 0) %>%  # 余りがあるかどうかのフラグ（TRUE: 余りあり）
+  filter(ans != 0)  # 割ることができない組み合わせは削除
+
+
+# 3桁まで
+divAns3 <- 
+  expand.grid(1:999, 1:999) %>% 
+  as_tibble() %>% 
+  mutate(paddedVar1 = str_pad(Var1, 3, pad = "0"),   # 0埋め(padding)した値 
+         paddedVar2 = str_pad(Var2, 3, pad = "0"), 
+         ans = Var1 %/% Var2,  # 答え
+         rmdr = Var1 %% Var2,  # 余り
+         haveRmdr = rmdr != 0) %>%  # 余りがあるかどうかのフラグ（TRUE: 余りあり）
+  filter(ans != 0)  # 割ることができない組み合わせは削除
+
 
 # 保存 ----------------------------------------------------------------------
 # 足し算の答え
@@ -89,3 +123,7 @@ saveRDS(subAns1, file = "app/data/subAns1.rds")
 saveRDS(subAns2, file = "app/data/subAns2.rds")
 saveRDS(subAns3, file = "app/data/subAns3.rds")
 
+# 割り算の答え
+saveRDS(divAns1, file = "app/data/divAns1.rds")
+saveRDS(divAns2, file = "app/data/divAns2.rds")
+saveRDS(divAns3, file = "app/data/divAns3.rds")
