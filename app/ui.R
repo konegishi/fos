@@ -40,16 +40,6 @@ shinyUI(fluidPage(
                              # 計算の詳細設定
                              uiOutput("advancedSettings"),
                              )),
-             # # 桁数の選択
-             # selectInput("digitNum", label = h3("桁数の設定"),
-             #             choices = list("1桁のみ" = 1, 
-             #                            "2桁まで" = 2,
-             #                            "3桁まで" = 3),
-             #             selected = 1),
-             # 
-             # # 計算の詳細設定
-             # uiOutput("advancedSettings"),
-
              
              hr(),
              
